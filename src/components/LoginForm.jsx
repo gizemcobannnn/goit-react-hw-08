@@ -10,7 +10,6 @@ const LoginForm = ()=>{
     const contacts = useSelector(state => state.contacts.items);
       const nameFieldId = useId();
       const passwordFieldId = useId();
-      const phoneFieldId = useId();
   
     const handleSubmit = (values, { resetForm }) => {
       const isDuplicate = contacts.some(
@@ -59,12 +58,6 @@ const LoginForm = ()=>{
                     <Field id={nameFieldId} name="username" type="text" />
                     <ErrorMessage name="username" component="span" style={{ color: "red" }} />
                 
-                </div>
-                <div>
-                    <label htmlFor={passwordFieldId}>Name</label>
-                    <Field id={phoneFieldId} name="phone" type="password" />
-                    <ErrorMessage name="password" component="span" style={{ color: "red" }} />
-
                 </div>
                 <div>
                      <label htmlFor={passwordFieldId}>Password</label>
