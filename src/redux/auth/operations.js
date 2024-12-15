@@ -9,4 +9,10 @@ export const loginUser = createAsyncThunk("auth/login",async()=>{
     
 })
 
+export const logoutUser = createAsyncThunk("auth/logout",async()=>{
+    
+})
 
+export const refreshUser = createAsyncThunk("auth/refresh",async()=>{
+    
+})  

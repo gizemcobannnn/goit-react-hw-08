@@ -1,7 +1,36 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useDispatch,useSelector } from "react-redux";
+import { addContact } from "../redux/contacts/operations";
+import { useId } from "react";
 
 const LoginForm = ()=>{
+
+    const dispatch = useDispatch();
+    const contacts = useSelector(state => state.contacts.items);
+      const nameFieldId = useId();
+      const passwordFieldId = useId();
+      const phoneFieldId = useId();
+  
+    const handleSubmit = (values, { resetForm }) => {
+      const isDuplicate = contacts.some(
+        (contact) =>
+          contact.name.toLowerCase() === values.username.trim().toLowerCase() ||
+          contact.phone === values.phone.trim()
+      );
+  
+      if (isDuplicate) {
+        alert("This contact already exists!");
+        return; // Ekleme işlemini durdur
+      }
+      const newContact = {
+        name: values.username.trim(),
+        phone: values.phone.trim(),
+      };
+      dispatch(addContact(newContact));
+  
+      resetForm(); // Formu sıfırla
+    };
 
       const validationSchema = Yup.object().shape({
         username: Yup.string()
@@ -11,6 +40,9 @@ const LoginForm = ()=>{
           .required("Phone number is required")
           .matches(/^[0-9]+$/, "Phone number is not valid")
           .min(10, "Phone number must be at least 10 digits"),
+        password: Yup.string()
+          .required("Password is required")
+          .min(6, "Password must be at least 6 characters"),
       });
 
     return(
@@ -24,16 +56,21 @@ const LoginForm = ()=>{
             <Form action="">
                 <div>
                     <label htmlFor={nameFieldId}>Name</label>
-                    <Field type="text" />
+                    <Field id={nameFieldId} name="username" type="text" />
                     <ErrorMessage name="username" component="span" style={{ color: "red" }} />
                 
                 </div>
                 <div>
                     <label htmlFor={passwordFieldId}>Name</label>
-                    <Field type="password" />
+                    <Field id={phoneFieldId} name="phone" type="password" />
                     <ErrorMessage name="password" component="span" style={{ color: "red" }} />
 
                 </div>
+                <div>
+                     <label htmlFor={passwordFieldId}>Password</label>
+                     <Field id={passwordFieldId} name="password" type="password" />
+                       <ErrorMessage name="password" component="span" style={{ color: "red" }} />
+               </div>
                 <button
               type="submit"
               style={{
@@ -44,8 +81,8 @@ const LoginForm = ()=>{
                 cursor: "pointer",
                 borderRadius: "5px",
               }}
-            >
-        Login            </button>
+            > Login  
+             </button>
             </Form>
         </Formik>
     )
