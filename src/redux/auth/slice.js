@@ -37,11 +37,11 @@ export const register = createAsyncThunk("auth/register",async({username,email,p
 
 export const logoutUser = createAsyncThunk("auth/logout",async(_,{rejectWithValue})=>{
   try{
-    const response = await axios.post(`${API_URL}users/logout`);
+    const response = await axios.post(`${API_URL}/users/logout`, null);
     return response.data;
   }
   catch(error){
-    return rejectWithValue(error.response?.data || "Login failed");
+    return rejectWithValue(error.response?.data || "Logout failed");
   }
 })
 
