@@ -8,7 +8,7 @@ const LoginForm = ()=>{
 
     const dispatch = useDispatch();
     const contacts = useSelector(state => state.contacts.items);
-      const nameFieldId = useId();
+      const emailFieldId = useId();
       const passwordFieldId = useId();
   
     const handleSubmit = (values, { resetForm }) => {
@@ -32,7 +32,7 @@ const LoginForm = ()=>{
     };
 
       const validationSchema = Yup.object().shape({
-        username: Yup.string()
+        email: Yup.string()
           .required("Username is required")
           .min(3, "Username must be at least 3 characters"),
         phone: Yup.string()
@@ -54,9 +54,9 @@ const LoginForm = ()=>{
           onSubmit={handleSubmit}>
             <Form action="">
                 <div>
-                    <label htmlFor={nameFieldId}>Name</label>
-                    <Field id={nameFieldId} name="username" type="text" />
-                    <ErrorMessage name="username" component="span" style={{ color: "red" }} />
+                    <label htmlFor={emailFieldId}>Name</label>
+                    <Field id={emailFieldId} name="email" type="text" />
+                    <ErrorMessage name="email" component="span" style={{ color: "red" }} />
                 
                 </div>
                 <div>

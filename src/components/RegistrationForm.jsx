@@ -8,7 +8,7 @@ const RegistrationForm = ()=>{
         const dispatch = useDispatch();
         const contacts = useSelector(state => state.contacts.items);
         const nameFieldId = useId();
-        const phoneFieldId = useId();
+        const emailFieldId = useId();
         const passwordFieldId = useId();
         const handleSubmit = (values, { resetForm }) => {
           const isDuplicate = contacts.some(
@@ -34,7 +34,7 @@ const RegistrationForm = ()=>{
         username: Yup.string()
           .required("Username is required")
           .min(3, "Username must be at least 3 characters"),
-        phone: Yup.string()
+        email: Yup.string()
           .required("Phone number is required")
           .matches(/^[0-9]+$/, "Phone number is not valid")
           .min(10, "Phone number must be at least 10 digits"),
@@ -61,9 +61,9 @@ const RegistrationForm = ()=>{
 
                     {/* Phone Field */}
                     <div>
-                      <label htmlFor={phoneFieldId}>Phone</label>
-                      <Field id={phoneFieldId} name="phone" type="text" />
-                      <ErrorMessage name="phone" component="span" style={{ color: "red" }} />
+                      <label htmlFor={emailFieldId}>Phone</label>
+                      <Field id={emailFieldId} name="email" type="text" />
+                      <ErrorMessage name="email" component="span" style={{ color: "red" }} />
                     </div>
 
                     {/* Password Field */}
@@ -82,8 +82,8 @@ const RegistrationForm = ()=>{
                 cursor: "pointer",
                 borderRadius: "5px",
               }}
-            >
-        Login            </button>
+            >Register
+            </button>
             </Form>
         </Formik>
     )

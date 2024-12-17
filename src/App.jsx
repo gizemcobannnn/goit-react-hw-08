@@ -32,16 +32,12 @@ function App() {
       {/* Conditional Routing */}
       <Routes>
         <Route
-          path="/"
-          element={<RestrictedRoute isLoggedIn={isLoggedIn}>
-          <LoginForm />
-        </RestrictedRoute>}
+      path="/login"
+      element={<RestrictedRoute component={LoginForm} />}
         />
-        <Route
-          path="/register"
-          element={<RestrictedRoute isLoggedIn={isLoggedIn}>
-          <RegistrationForm />
-        </RestrictedRoute>}
+      <Route
+        path="/register"
+        element={<RestrictedRoute component={RegistrationForm} />}
         />
         <Route
           path="/contacts"
@@ -67,3 +63,4 @@ function App() {
 }
 
 export default App;
+
