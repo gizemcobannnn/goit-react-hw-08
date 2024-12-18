@@ -6,6 +6,7 @@ export const initialState ={
   user: {
     name: null,
     email: null,
+    password:""
   },
   token: null,
   isLoggedIn: false,
@@ -15,9 +16,9 @@ export const initialState ={
 
 const API_URL="https://connections-api.goit.global";
 
-export const login = createAsyncThunk("auth/login",async({username,password},{ rejectWithValue })=>{
+export const login = createAsyncThunk("auth/login",async({email,password},{ rejectWithValue })=>{
   try{
-    const response = await axios.post(`${API_URL}/users/login`,{username,password});
+    const response = await axios.post(`${API_URL}/users/login`,{email,password});
     return response.data;
   }
   catch(error){

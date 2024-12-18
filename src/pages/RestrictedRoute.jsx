@@ -1,10 +1,14 @@
-import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Routes, Route } from 'react-router-dom'
+import ContactForm from '../components/ContactForm';
+import UserMenu from '../components/UserMenu';
 
-// eslint-disable-next-line react/prop-types
-const RestrictedRoute = ({ component: Component, redirectTo = "/contacts" }) => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  return isLoggedIn ? <Navigate to={redirectTo} /> : <Component />;
-};
+const RestrictedRoute = () => {
+  return (
+    <Routes>
+    <Route path="/" element={<ContactForm/>}></Route>
+    <Route path="/login" element={<UserMenu/>}></Route>
+  </Routes>
+  );
+}
 
-export default RestrictedRoute;
+export default RestrictedRoute

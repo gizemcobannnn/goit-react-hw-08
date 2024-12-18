@@ -1,84 +1,93 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useDispatch,useSelector } from "react-redux";
-import { addContact } from "../redux/contacts/operations";
-import { useId } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Style from "./LoginForm.module.css";
+import { login } from "../redux/auth/slice";
 
-const LoginForm = ()=>{
+const LoginForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoggedIn, token, isRefreshing } = useSelector((state) => state.auth);
 
-    const dispatch = useDispatch();
-    const contacts = useSelector(state => state.contacts.items);
-      const emailFieldId = useId();
-      const passwordFieldId = useId();
-  
-    const handleSubmit = (values, { resetForm }) => {
-      const isDuplicate = contacts.some(
-        (contact) =>
-          contact.name.toLowerCase() === values.username.trim().toLowerCase() ||
-          contact.phone === values.phone.trim()
-      );
-  
-      if (isDuplicate) {
-        alert("This contact already exists!");
-        return; // Ekleme işlemini durdur
-      }
-      const newContact = {
-        name: values.username.trim(),
-        phone: values.phone.trim(),
-      };
-      dispatch(addContact(newContact));
-  
-      resetForm(); // Formu sıfırla
-    };
+  console.log(`${isLoggedIn}, ${token}, ${isRefreshing}`);
 
-      const validationSchema = Yup.object().shape({
-        email: Yup.string()
-          .required("Username is required")
-          .min(3, "Username must be at least 3 characters"),
-        phone: Yup.string()
-          .required("Phone number is required")
-          .matches(/^[0-9]+$/, "Phone number is not valid")
-          .min(10, "Phone number must be at least 10 digits"),
-        password: Yup.string()
-          .required("Password is required")
-          .min(6, "Password must be at least 6 characters"),
+
+
+  // Form Submit işlemi
+  const handleSubmit = ({ email, password }, { resetForm }) => {
+    if (!email || !password) {
+      alert("Fill in the inputs");
+      return;
+    }
+
+    dispatch(login({ email, password }))
+      .unwrap() // Redux Toolkit ile hata ayıklama
+      .then(() => {
+        navigate("/usermenu"); // Başarılı giriş sonrası yönlendirme
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
       });
 
-    return(
-        <Formik
-        initialValues={{
-            username: "",
-            phone: "",
+    resetForm();
+  };
+
+  // Form Validation Schema
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .required("Email is required")
+      .email("Invalid email format"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters"),
+  });
+
+  // Eğer kullanıcı giriş yaptıysa Logout ekranını göster
+  if (isLoggedIn && token) {
+    // Kullanıcı giriş yapmadıysa Login formunu göster
+  return (
+    <Formik
+      initialValues={{
+        email: "",
+        password: "",
+      }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form>
+        <div className={Style.loginFormInput}>
+          <label htmlFor="email">Email</label>
+          <Field id="email" name="email" type="text" />
+          <ErrorMessage name="email" component="span" style={{ color: "red" }} />
+        </div>
+        <div className={Style.loginFormInput}>
+          <label htmlFor="password">Password</label>
+          <Field id="password" name="password" type="password" />
+          <ErrorMessage
+            name="password"
+            component="span"
+            style={{ color: "red" }}
+          />
+        </div>
+        <button
+          disabled={isRefreshing}
+          type="submit"
+          style={{
+            backgroundColor: "#4caf50",
+            color: "white",
+            border: "none",
+            padding: "10px 15px",
+            cursor: "pointer",
+            borderRadius: "5px",
           }}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}>
-            <Form action="">
-                <div>
-                    <label htmlFor={emailFieldId}>Name</label>
-                    <Field id={emailFieldId} name="email" type="text" />
-                    <ErrorMessage name="email" component="span" style={{ color: "red" }} />
-                
-                </div>
-                <div>
-                     <label htmlFor={passwordFieldId}>Password</label>
-                     <Field id={passwordFieldId} name="password" type="password" />
-                       <ErrorMessage name="password" component="span" style={{ color: "red" }} />
-               </div>
-                <button
-              type="submit"
-              style={{
-                backgroundColor: "#4caf50",
-                color: "white",
-                border: "none",
-                padding: "10px 15px",
-                cursor: "pointer",
-                borderRadius: "5px",
-              }}
-            > Login  
-             </button>
-            </Form>
-        </Formik>
-    )
+        >
+          {isRefreshing ? "Logging in..." : "Login"}
+        </button>
+      </Form>
+    </Formik>
+  );
 }
+};
 
 export default LoginForm;
