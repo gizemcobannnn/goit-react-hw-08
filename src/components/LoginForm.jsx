@@ -43,9 +43,7 @@ const LoginForm = () => {
       .min(6, "Password must be at least 6 characters"),
   });
 
-  // Eğer kullanıcı giriş yaptıysa Logout ekranını göster
-  if (isLoggedIn && token) {
-    // Kullanıcı giriş yapmadıysa Login formunu göster
+
   return (
     <Formik
       initialValues={{
@@ -87,7 +85,7 @@ const LoginForm = () => {
       </Form>
     </Formik>
   );
-}
+
 };
 
 export default LoginForm;

@@ -9,7 +9,6 @@ const PrivateRoute = () => {
       <Route path="/" element={<LoginForm/>}></Route>
       <Route path="/login" element={<LoginForm/>}></Route>
       <Route path="/usermenu" element={<UserMenu/>}></Route>
-
       <Route path="/register" element={<RegistrationForm/>}></Route>
     </Routes>
   )
