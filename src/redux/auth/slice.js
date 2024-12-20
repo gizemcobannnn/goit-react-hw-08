@@ -36,9 +36,15 @@ export const register = createAsyncThunk("auth/register",async({username,email,p
   }
 })
 
-export const logoutUser = createAsyncThunk("auth/logout",async(_,{rejectWithValue})=>{
+export const logoutUser = createAsyncThunk("auth/logout",async(_,{getState,rejectWithValue})=>{
   try{
-    const response = await axios.post(`${API_URL}/users/logout`, null);
+    const { token } = getState().auth;
+    const response = await axios.post(`${API_URL}/users/logout`, null, {
+      headers: {
+        Accept: "*/*",
+        Authorization: `Bearer ${token}`
+  
+      },});
     return response.data;
   }
   catch(error){
@@ -68,6 +74,11 @@ export const refreshUser = createAsyncThunk(
 const authSlice = createSlice({
   name:"auth",
   initialState,
+  reducers: {
+    setToken(state, action) {
+      state.token = action.payload;
+    },
+  },
   extraReducers:(builder)=>{
     builder
           // Login Reducers

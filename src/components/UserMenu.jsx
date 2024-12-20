@@ -2,18 +2,31 @@ import ContactForm from "./ContactForm";
 import ContactList from "./ContactList"
 import SearchBox from "./SearchBox"
 import { logoutUser } from "../redux/auth/slice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 const UserMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-    // Logout işlemi
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+ 
+    if(!isLoggedIn){
+      navigate("/login");
+      return null
+    }
 
     const handleLogout = () => {
-      dispatch(logoutUser());
-      navigate("/login");
-      console.log("logout")
+      dispatch(logoutUser())
+        .unwrap() // Hata ve başarıyı yakalamak için
+        .then(() => {
+          navigate("/login"); // Başarıyla logout sonrası login sayfasına git
+        })
+        .catch((error) => {
+          console.error("Logout failed:", error); // Hata durumunda log bas
+        });
     };
+
   return (
 
     <div>
@@ -34,9 +47,7 @@ const UserMenu = () => {
                   borderRadius: "5px",
                 }}
                 onClick={handleLogout}
-              >
-                Logout
-              </button>
+              >Logout</button >
             </div>
       <ContactForm/>
       <SearchBox/>

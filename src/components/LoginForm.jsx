@@ -13,7 +13,6 @@ const LoginForm = () => {
   console.log(`${isLoggedIn}, ${token}, ${isRefreshing}`);
 
 
-
   // Form Submit işlemi
   const handleSubmit = ({ email, password }, { resetForm }) => {
     if (!email || !password) {
@@ -33,6 +32,10 @@ const LoginForm = () => {
     resetForm();
   };
 
+  
+  if (isLoggedIn) {
+    navigate("/usermenu");
+  }
   // Form Validation Schema
   const validationSchema = Yup.object().shape({
     email: Yup.string()
