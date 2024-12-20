@@ -1,41 +1,42 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Style from "./LoginForm.module.css";
 import { login } from "../redux/auth/slice";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoggedIn, token, isRefreshing } = useSelector((state) => state.auth);
+  const navigate = useNavigate(); 
 
   console.log(`${isLoggedIn}, ${token}, ${isRefreshing}`);
 
 
   // Form Submit işlemi
-  const handleSubmit = ({ email, password }, { resetForm }) => {
+  const handleSubmit = async({ email, password }, { resetForm }) => {
     if (!email || !password) {
       alert("Fill in the inputs");
       return;
     }
 
-    dispatch(login({ email, password }))
-      .unwrap() // Redux Toolkit ile hata ayıklama
-      .then(() => {
-        navigate("/usermenu"); // Başarılı giriş sonrası yönlendirme
-      })
-      .catch((error) => {
-        console.error("Login failed:", error);
-      });
-
-    resetForm();
+    try {
+      await dispatch(login({ email, password })).unwrap(); // Hataları düzgün yönetmek için unwrap kullanılır
+      navigate("/usermenu"); // Başarılı girişten sonra yönlendirme
+    } catch (error) {
+      console.error("Login failed:", error); // Giriş başarısız olursa hata konsola yazılır
+      alert("Login failed: " + error.message); // Kullanıcıya hata mesajı gösterilir
+    }
+    resetForm(); 
   };
 
-  
-  if (isLoggedIn) {
-    navigate("/usermenu");
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/usermenu"); // Giriş yapılmışsa yönlendirme
+    }
+  }, [isLoggedIn, navigate]); 
+
   // Form Validation Schema
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -48,6 +49,7 @@ const LoginForm = () => {
 
 
   return (
+    <>
     <Formik
       initialValues={{
         email: "",
@@ -74,19 +76,14 @@ const LoginForm = () => {
         <button
           disabled={isRefreshing}
           type="submit"
-          style={{
-            backgroundColor: "#4caf50",
-            color: "white",
-            border: "none",
-            padding: "10px 15px",
-            cursor: "pointer",
-            borderRadius: "5px",
-          }}
+         className={Style.buttonlogreg}
         >
           {isRefreshing ? "Logging in..." : "Login"}
         </button>
       </Form>
     </Formik>
+    <button className={Style.buttonlogreg}>Register</button>
+    </>
   );
 
 };

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
-
 export const initialState ={
   user: {
     name: null,
@@ -16,9 +15,13 @@ export const initialState ={
 
 const API_URL="https://connections-api.goit.global";
 
-export const login = createAsyncThunk("auth/login",async({email,password},{ rejectWithValue })=>{
+export const login = createAsyncThunk("auth/login",async({email,password},{dispatch, rejectWithValue })=>{
   try{
+ 
     const response = await axios.post(`${API_URL}/users/login`,{email,password});
+    const token = response.data.token;
+    dispatch(setToken(token))
+    console.log(token)
     return response.data;
   }
   catch(error){
@@ -45,6 +48,7 @@ export const logoutUser = createAsyncThunk("auth/logout",async(_,{getState,rejec
         Authorization: `Bearer ${token}`
   
       },});
+    
     return response.data;
   }
   catch(error){
@@ -77,6 +81,7 @@ const authSlice = createSlice({
   reducers: {
     setToken(state, action) {
       state.token = action.payload;
+      state.isLoggedIn = !!action.payload; // Token varsa giriş yapıldı
     },
   },
   extraReducers:(builder)=>{
@@ -139,5 +144,6 @@ const authSlice = createSlice({
 
   }
 })
+export const { setToken } = authSlice.actions;
 
 export default authSlice.reducer;

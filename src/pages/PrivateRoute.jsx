@@ -1,17 +1,12 @@
-import { Routes, Route } from 'react-router-dom'
-import LoginForm from '../components/LoginForm'
-import RegistrationForm from '../components/RegistrationForm'
-  import UserMenu from '../components/UserMenu'
+import {Navigate } from 'react-router-dom'
 
-const PrivateRoute = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<LoginForm/>}></Route>
-      <Route path="/login" element={<LoginForm/>}></Route>
-      <Route path="/usermenu" element={<UserMenu/>}></Route>
-      <Route path="/register" element={<RegistrationForm/>}></Route>
-    </Routes>
-  )
+import { useSelector } from 'react-redux'
+
+// eslint-disable-next-line react/prop-types
+const PrivateRoute = ({ children }) =>{
+  
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  return isLoggedIn ? children : <Navigate to="login"/>
 }
 
 export default PrivateRoute

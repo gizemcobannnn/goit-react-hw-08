@@ -1,12 +1,11 @@
-import { Routes, Route } from 'react-router-dom'
-import UserMenu from '../components/UserMenu';
+import { Navigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
-const RestrictedRoute = () => {
-  return (
-    <Routes>
-    <Route path="/login" element={<UserMenu/>}></Route>
-  </Routes>
-  );
+// eslint-disable-next-line react/prop-types
+const RestrictedRoute = ({children}) => {
+  const isLoggedIn = useSelector(state => state.auth);
+
+  return isLoggedIn ? children : <Navigate to="usermenu"/>
 }
 
 export default RestrictedRoute

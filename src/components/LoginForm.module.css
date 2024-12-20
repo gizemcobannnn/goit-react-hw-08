@@ -1,8 +1,16 @@
 .loginFormInput{
     flex-direction: row;
-    display: flex;
     align-items: center;
     width: 200px;
     margin: 1rem auto;
 }
 
+.buttonlogreg{
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
