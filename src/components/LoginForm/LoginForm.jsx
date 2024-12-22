@@ -4,15 +4,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Style from "./LoginForm.module.css";
-import { login } from "../redux/auth/slice";
+import { login } from "../../redux/auth/slice";
 
 const LoginForm = () => {
+
+  
   const dispatch = useDispatch();
   const { isLoggedIn, token, isRefreshing } = useSelector((state) => state.auth);
   const navigate = useNavigate(); 
 
   console.log(`${isLoggedIn}, ${token}, ${isRefreshing}`);
-
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/usermenu"); // Giriş yapılmışsa yönlendirme
+    }
+  }, [isLoggedIn, navigate]); 
 
   // Form Submit işlemi
   const handleSubmit = async({ email, password }, { resetForm }) => {
@@ -31,12 +37,13 @@ const LoginForm = () => {
     resetForm(); 
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/usermenu"); // Giriş yapılmışsa yönlendirme
-    }
-  }, [isLoggedIn, navigate]); 
 
+
+  const handleRegister= ()=>{
+    console.log("Navigating to /register"); // Konsola log ekleyin
+    navigate("/register");
+  }
+  
   // Form Validation Schema
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -82,7 +89,7 @@ const LoginForm = () => {
         </button>
       </Form>
     </Formik>
-    <button className={Style.buttonlogreg}>Register</button>
+    <button className={Style.buttonlogreg} onClick={()=> handleRegister()}>Register</button>
     </>
   );
 

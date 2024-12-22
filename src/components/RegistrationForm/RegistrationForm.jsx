@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch,useSelector} from "react-redux";
 import * as Yup from "yup";
-import { addContact } from "../redux/contacts/operations";
+import { addContact } from "../../redux/contacts/operations";
 import { useId } from "react";
 const RegistrationForm = ()=>{
 

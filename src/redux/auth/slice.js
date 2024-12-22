@@ -83,6 +83,10 @@ const authSlice = createSlice({
       state.token = action.payload;
       state.isLoggedIn = !!action.payload; // Token varsa giriş yapıldı
     },
+    logoutSuccess: (state) => {
+      state.isLoggedIn = false;
+      state.token = null;
+    },
   },
   extraReducers:(builder)=>{
     builder
@@ -140,6 +144,10 @@ const authSlice = createSlice({
           .addCase(refreshUser.rejected, (state, action) => {
             state.error = action.payload || "Refresh failed";
             state.isRefreshing = false;
+          })
+          .addCase('persist/REHYDRATE', (state, action) => {
+            // Redux Persist yeniden yükleme işlemi için varsayılan davranış
+            return action.payload ? { ...state, ...action.payload.auth } : state;
           });
 
   }

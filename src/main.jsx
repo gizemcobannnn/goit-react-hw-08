@@ -1,7 +1,7 @@
 // src/main.jsx
 
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from '../src/components/App';
 // 1. Provider'ı içe aktarıyoruz
 import { Provider } from 'react-redux'
 // 2. Daha önce oluşturulan store'u içe aktarıyoruz
