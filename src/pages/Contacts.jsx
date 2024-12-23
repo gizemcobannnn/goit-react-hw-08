@@ -1,6 +1,6 @@
-import ContactForm from "../components/ContactForm";
-import ContactList from "../components/ContactList"
-import Filter from "../components/SearchBox"
+import ContactForm from "../components/Contacts/ContactForm";
+import ContactList from "../components/Contacts/ContactList"
+import Filter from "../components/SearchBox/SearchBox"
 import { logoutUser, setToken } from "../redux/auth/slice";
 import { useDispatch,useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";

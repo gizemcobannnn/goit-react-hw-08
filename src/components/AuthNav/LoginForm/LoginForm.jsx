@@ -3,12 +3,10 @@ import * as Yup from "yup";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Style from "./LoginForm.module.css";
-import { login } from "../../redux/auth/slice";
+import Styles from "./LoginForm.module.css";
+import {login} from "../../../redux/auth/slice"
 
 const LoginForm = () => {
-
-  
   const dispatch = useDispatch();
   const { isLoggedIn, token, isRefreshing } = useSelector((state) => state.auth);
   const navigate = useNavigate(); 
@@ -38,11 +36,6 @@ const LoginForm = () => {
   };
 
 
-
-  const handleRegister= ()=>{
-    console.log("Navigating to /register"); // Konsola log ekleyin
-    navigate("/register");
-  }
   
   // Form Validation Schema
   const validationSchema = Yup.object().shape({
@@ -65,31 +58,31 @@ const LoginForm = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
-        <div className={Style.loginFormInput}>
+      <Form className="Styles.formContainer">
+        <div className={Styles.loginFormInput}>
           <label htmlFor="email">Email</label>
-          <Field id="email" name="email" type="text" />
-          <ErrorMessage name="email" component="span" style={{ color: "red" }} />
+          <Field id="email" name="email" type="text"  className={Styles.input} />
+          <ErrorMessage name="email" component="span" className={Styles.errorMessage} />
         </div>
-        <div className={Style.loginFormInput}>
+        <div className={Styles.loginFormInput}>
           <label htmlFor="password">Password</label>
-          <Field id="password" name="password" type="password" />
+          <Field id="password" name="password" type="password" className={Styles.input}/>
           <ErrorMessage
             name="password"
             component="span"
-            style={{ color: "red" }}
+            className={Styles.errorMessage}
           />
         </div>
         <button
           disabled={isRefreshing}
           type="submit"
-         className={Style.buttonlogreg}
+         className={Styles.buttonlogreg}
         >
           {isRefreshing ? "Logging in..." : "Login"}
         </button>
       </Form>
     </Formik>
-    <button className={Style.buttonlogreg} onClick={()=> handleRegister()}>Register</button>
+   
     </>
   );
 

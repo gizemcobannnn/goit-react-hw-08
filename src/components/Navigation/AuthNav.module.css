@@ -1,0 +1,25 @@
+.navContainer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+  }
+  
+  .navLink {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .navLink:hover {
+    color: #0056b3;
+  }
+  
+  .navLink.active {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  

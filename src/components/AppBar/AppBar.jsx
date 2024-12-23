@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import Navigation from "../Navigation/Navigation"
-import AuthNav from "../AuthNav/AuthNav"
-import UserMenu from "../UserMenu";
+import AuthNav from "../Navigation/AuthNav"
+import UserMenu from "../Navigation/UserMenu";
 
 const AppBar = () => {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn)

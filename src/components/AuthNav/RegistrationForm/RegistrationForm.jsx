@@ -1,7 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch,useSelector} from "react-redux";
 import * as Yup from "yup";
-import { addContact } from "../../redux/contacts/operations";
+import Styles from "./RegistrationForm.module.css"
+import { addContact } from "../../../redux/contacts/operations";
 import { useId } from "react";
 const RegistrationForm = ()=>{
 
@@ -51,37 +52,30 @@ const RegistrationForm = ()=>{
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}>
-            <Form action="">
+            <Form action=""  className={Styles.formContainer}>
                    {/* Username Field */}
-                    <div>
-                      <label htmlFor={nameFieldId}>Username</label>
-                      <Field id={nameFieldId} name="username" type="text" />
-                      <ErrorMessage name="username" component="span" style={{ color: "red" }} />
+                    <div className={Styles.formField}>
+                      <label htmlFor={nameFieldId} className={Styles.label}>Username</label>
+                      <Field id={nameFieldId} name="username" type="text" className={Styles.input}  />
+                      <ErrorMessage name="username" component="span" style={{ color: "red" }} className={Styles.errorMessage} />
                     </div>
 
                     {/* Phone Field */}
-                    <div>
-                      <label htmlFor={emailFieldId}>Phone</label>
-                      <Field id={emailFieldId} name="email" type="text" />
-                      <ErrorMessage name="email" component="span" style={{ color: "red" }} />
+                    <div className={Styles.formField}>
+                      <label htmlFor={emailFieldId} className={Styles.label} >Phone</label>
+                      <Field id={emailFieldId} name="email" type="text"  className={Styles.input} />
+                      <ErrorMessage name="email" component="span" style={{ color: "red" }} className={Styles.errorMessage} />
                     </div>
 
                     {/* Password Field */}
-                    <div>
-                      <label htmlFor={passwordFieldId}>Password</label>
-                      <Field id={passwordFieldId} name="password" type="password" />
-                      <ErrorMessage name="password" component="span" style={{ color: "red" }} />
+                    <div className={Styles.formField}>
+                      <label htmlFor={passwordFieldId} className={Styles.label}>Password</label>
+                      <Field id={passwordFieldId} name="password" type="password"  className={Styles.input}/>
+                      <ErrorMessage name="password" component="span" style={{ color: "red" }} className={Styles.errorMessage}/>
                     </div>
                 <button
               type="submit"
-              style={{
-                backgroundColor: "#4caf50",
-                color: "white",
-                border: "none",
-                padding: "10px 15px",
-                cursor: "pointer",
-                borderRadius: "5px",
-              }}
+              className={Styles.submitButton}
             >Register
             </button>
             </Form>

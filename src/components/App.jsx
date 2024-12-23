@@ -1,15 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginForm from "./LoginForm/LoginForm";
-import RegistrationForm from "./RegistrationForm/RegistrationForm"
-import RestrictedRoute from "./PrivateRoute/PrivateRoute"
-import PrivateRoute from "./RestrictedRoute/RestrictedRoute"
-import UserMenu from "./UserMenu"
 import "./App.css";
-import { fetchContacts } from "../redux/contacts/operations";
+
+import LoginForm from "./AuthNav/LoginForm/LoginForm";
+import RegistrationForm from "./AuthNav/RegistrationForm/RegistrationForm";
+import RestrictedRoute from "./Router/RestrictedRoute";
+import PrivateRoute from "./Router/PrivateRoute";
+import UserMenu from "./Navigation/UserMenu";
 import Contacts from "../pages/Contacts";
 import Layout from "./Layout/Layout";
+
+import { fetchContacts } from "../redux/contacts/operations";
+
 
 function App() {
   const dispatch = useDispatch();
