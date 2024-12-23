@@ -1,9 +1,9 @@
-.formContainer {
+.loginFormContainer {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     max-width: 400px;
-    margin: 2rem auto;
+    margin: 0 auto;
     padding: 2rem;
     background-color: #f9f9f9;
     border: 1px solid #ddd;

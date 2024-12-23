@@ -58,7 +58,7 @@ const LoginForm = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      <Form className="Styles.formContainer">
+      <Form className={Styles.loginFormContainer}>
         <div className={Styles.loginFormInput}>
           <label htmlFor="email">Email</label>
           <Field id="email" name="email" type="text"  className={Styles.input} />
