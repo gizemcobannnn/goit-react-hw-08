@@ -29,15 +29,20 @@ export const login = createAsyncThunk("auth/login",async({email,password},{dispa
   }
 });
 
-export const register = createAsyncThunk("auth/register",async({username,email,password},{rejectWithValue})=>{
-  try{
-    const response = await axios.post(`${API_URL}/users/signup`, { username, email, password });
-    return response.data;
+export const register = createAsyncThunk(
+  "auth/register",
+  async ({ name, email, password }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_URL}/users/signup`, {
+        name, email, password
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Registration failed");
+    }
   }
-  catch(error){
-    return rejectWithValue(error.response?.data || "Login failed");
-  }
-})
+);
+
 
 export const logoutUser = createAsyncThunk("auth/logout",async(_,{getState,rejectWithValue})=>{
   try{

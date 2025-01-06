@@ -42,7 +42,7 @@
     font-size: 0.875rem;
   }
   
-  .submitButton {
+  .submitRegButton {
     background-color: #4caf50;
     color: white;
     border: none;
@@ -53,12 +53,23 @@
     border-radius: 5px;
     transition: background-color 0.3s;
   }
+  .submitLogButton {
+    background-color: #6b716b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
   
-  .submitButton:hover {
+  .submitRegButton:hover {
     background-color: #45a049;
   }
   
-  .submitButton:disabled {
+  .submitRegButton:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }

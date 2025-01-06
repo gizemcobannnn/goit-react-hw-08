@@ -1,25 +1,18 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";  // Correct import
 import Styles from "./LoginForm.module.css";
-import {login} from "../../../redux/auth/slice"
+import { login } from "../../../redux/auth/slice";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, token, isRefreshing } = useSelector((state) => state.auth);
-  const navigate = useNavigate(); 
-
-  console.log(`${isLoggedIn}, ${token}, ${isRefreshing}`);
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/usermenu"); // Giriş yapılmışsa yönlendirme
-    }
-  }, [isLoggedIn, navigate]); 
+  const isRefreshing = useSelector((state) => state.auth.isRefreshing);
+  const navigate = useNavigate();
 
   // Form Submit işlemi
-  const handleSubmit = async({ email, password }, { resetForm }) => {
+  const handleSubmit = async(values, { resetForm }) => {
+    const {email, password} = values;
     if (!email || !password) {
       alert("Fill in the inputs");
       return;
@@ -27,7 +20,6 @@ const LoginForm = () => {
 
     try {
       await dispatch(login({ email, password })).unwrap(); // Hataları düzgün yönetmek için unwrap kullanılır
-      navigate("/usermenu"); // Başarılı girişten sonra yönlendirme
     } catch (error) {
       console.error("Login failed:", error); // Giriş başarısız olursa hata konsola yazılır
       alert("Login failed: " + error.message); // Kullanıcıya hata mesajı gösterilir
@@ -76,9 +68,18 @@ const LoginForm = () => {
         <button
           disabled={isRefreshing}
           type="submit"
-         className={Styles.buttonlogreg}
+         className={Styles.buttonlog}
         >
           {isRefreshing ? "Logging in..." : "Login"}
+        </button>
+
+        <button
+          disabled={isRefreshing}
+          type="submit"
+         className={Styles.buttonreg}
+         onClick={()=>  navigate('/register')}
+        >
+          {isRefreshing ? "Register in..." : "Register"}
         </button>
       </Form>
     </Formik>
