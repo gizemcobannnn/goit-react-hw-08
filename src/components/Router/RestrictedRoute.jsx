@@ -10,7 +10,7 @@ const RestrictedRoute = ({ children }) => {
 
   useEffect(() => {
     // Eğer kullanıcı giriş yapmışsa, yönlendirme yapılır
-    if (isLoggedIn && token) {
+    if ( token) {
       navigate('/usermenu', { replace: true });
     }
   }, [isLoggedIn, token, navigate]); // Burada gerekli bağımlılıkları ekliyoruz.
