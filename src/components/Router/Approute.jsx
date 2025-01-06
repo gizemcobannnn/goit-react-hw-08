@@ -2,6 +2,7 @@ import {  Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import RestrictedRoute from './RestrictedRoute'
 import PrivateRoute from './PrivateRoute'
+import UserMenu from '../Navigation/UserMenu';
 
 
 const Approute = () => {
@@ -38,7 +39,7 @@ const Approute = () => {
         />
         <Route
           path="/usermenu"
-          element={<PrivateRoute> <ContactsPage /> </PrivateRoute>}
+          element={<PrivateRoute> <UserMenu /> </PrivateRoute>}
         />
         <Route
           path="*"

@@ -7,6 +7,8 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/auth/slice"
+import Navigation from "./Navigation";
+import Styles from './UserMenu.module.css'
 
 export default function UserMenu() {
   const dispatch = useDispatch();
@@ -23,8 +25,10 @@ export default function UserMenu() {
 
   return (
     <div>
-      <p>Welcome {user.name}!</p>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+       <Navigation/>
+      <button onClick={handleLogout} className={Styles.logoutButton}>Logout</button>
+      <p className={Styles.username}>Welcome {user.name}!</p>
+     
+      </div>
   );
 }

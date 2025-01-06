@@ -5,6 +5,7 @@ import Styles from "./RegistrationForm.module.css";
 import { register } from "../../../redux/auth/slice";
 import { useId } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -13,12 +14,19 @@ const RegistrationForm = () => {
   const passwordFieldId = useId();
   const navigate = useNavigate();
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = async(values, { resetForm }) => {
     const { name, email, password } = values;
     console.log({ name, email, password });
+    try{ 
+      await dispatch(register({ name, email, password })).unwrap;
+      toast.success("Registration is successful.")
+      resetForm(); // Reset the form
+      navigate('/login')
+    }catch(error){
+      console.error("Registration failed:", error);
+      toast.error("Registration failed, please try again.");
+    }
 
-    dispatch(register({ name, email, password }));
-    resetForm(); // Reset the form
   };
 
   const validationSchema = Yup.object().shape({
@@ -66,7 +74,7 @@ const RegistrationForm = () => {
         </div>
 
         <button type="submit" className={Styles.submitRegButton}>Register</button>
-        <button type="submit" className={Styles.submitLogButton} onClick={()=> navigate('/login')}>Login</button>
+        <button type="button" className={Styles.submitLogButton} onClick={()=> navigate('/login')}>Login</button>
 
       </Form>
     </Formik>

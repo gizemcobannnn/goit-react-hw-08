@@ -9,7 +9,7 @@ const Contacts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {user, token} = useSelector((state) => state.auth);
+  const {token} = useSelector((state) => state.auth);
   console.log(token)
 
   const handleLogout = () => {
@@ -29,7 +29,6 @@ const Contacts = () => {
   return (
     <div>
       <div>
-        <h1>Welcome {user.name}!</h1>
         <button
           style={{
             position: "absolute",

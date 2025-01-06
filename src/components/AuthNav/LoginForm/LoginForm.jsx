@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";  // Correct import
 import Styles from "./LoginForm.module.css";
 import { login } from "../../../redux/auth/slice";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -15,14 +16,18 @@ const LoginForm = () => {
     const {email, password} = values;
     if (!email || !password) {
       alert("Fill in the inputs");
+      toast.error("Fill in the inputs")
       return;
     }
 
     try {
       await dispatch(login({ email, password })).unwrap(); // Hataları düzgün yönetmek için unwrap kullanılır
+      toast.success("Login successful!");
+
     } catch (error) {
-      console.error("Login failed:", error); // Giriş başarısız olursa hata konsola yazılır
-      alert("Login failed: " + error.message); // Kullanıcıya hata mesajı gösterilir
+      console.error("Login failed:", error); // Log detailed error
+     toast.error('Login failed! Please check your credentials and try again.'); // User-friendly error message
+
     }
     resetForm(); 
   };
@@ -75,7 +80,7 @@ const LoginForm = () => {
 
         <button
           disabled={isRefreshing}
-          type="submit"
+          type="button"
          className={Styles.buttonreg}
          onClick={()=>  navigate('/register')}
         >
