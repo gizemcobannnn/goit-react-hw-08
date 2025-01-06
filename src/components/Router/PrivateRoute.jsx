@@ -10,12 +10,10 @@ const PrivateRoute = ({ children }) =>{
       if (!token) {
         navigate('/login', { replace: true });
       }
-    }, [token, navigate]);
+    }, [token]);
 
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  const isRefreshing = useSelector(state => state.auth.isRefreshing);
 
-  return (isLoggedIn && !isRefreshing) ? children : <Navigate to='login' replace />
+  return (token) ? children : <Navigate to='/login' replace />
 
   
 }

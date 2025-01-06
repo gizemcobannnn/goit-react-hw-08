@@ -25,6 +25,14 @@ const Approute = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
+      <Route
+          path="/"
+          element={<RestrictedRoute> <LoginPage/> </RestrictedRoute>}
+        />
+         <Route
+          path="/home"
+          element={<PrivateRoute> <UserMenu/> </PrivateRoute>}
+        />
         <Route
           path="/login"
           element={<RestrictedRoute> <LoginPage/> </RestrictedRoute>}

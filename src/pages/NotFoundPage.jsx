@@ -1,7 +1,6 @@
-
 const NotFoundPage = () => {
   return (
-    <div>NotFoundPage</div>
+    <div style={{fontSize:"60px",fontFamily:"fantasy",color:"darkblue"}}>NotFoundPage</div>
   )
 }
 
