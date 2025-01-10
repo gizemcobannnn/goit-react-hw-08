@@ -15,12 +15,15 @@ export default function UserMenu() {
   const {user, token} = useSelector((state) => state.auth);
 
   const handleLogout = async () => {
-    try {
-      await dispatch(logoutUser(token)).unwrap();
-
-    } catch (error) {
-      console.error("Logout error:", error);
+    if(token){
+      try {
+        await dispatch(logoutUser(token)).unwrap();
+  
+      } catch (error) {
+        console.error("Logout error:", error);
+      }
     }
+    
   };
 
   return (

@@ -11,7 +11,7 @@ const Login = () => {
     if(isLoggedIn && token){
       navigate('/usermenu',  { replace: true });
     }
-  },[isLoggedIn, navigate]);
+  },[isLoggedIn, token, navigate]);
 
   return (
     <div>
