@@ -123,6 +123,7 @@ const authSlice = createSlice({
           })
           .addCase(register.rejected, (state, action) => {
             state.error = action.payload || "Registration failed";
+            state.isLoggedIn = false;
           })
     
           // Logout Reducers

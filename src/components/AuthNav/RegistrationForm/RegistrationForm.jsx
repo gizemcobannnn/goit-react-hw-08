@@ -18,13 +18,17 @@ const RegistrationForm = () => {
     const { name, email, password } = values;
     console.log({ name, email, password });
     try{ 
-      await dispatch(register({ name, email, password })).unwrap;
+      await dispatch(register({ name, email, password })).unwrap();
       toast.success("Registration is successful.")
       resetForm(); // Reset the form
       navigate('/login')
     }catch(error){
-      console.error("Registration failed:", error);
-      toast.error("Registration failed, please try again.");
+      if (error.code === 11000) {
+        toast.error("User already exists. Please try a different email.");
+      } else {
+        toast.error("Registration failed, please try again.");
+      }
+      resetForm();
     }
 
   };
